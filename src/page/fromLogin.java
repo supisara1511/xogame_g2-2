@@ -186,12 +186,13 @@ public class fromLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบ");
         }else {
             Response res = APIService.login(username, password);
+            System.out.println(res.getMessage());
                 if(res.getStatus()==0){
                     new formLobby(res.getData()).setVisible(true);
+                    this.dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, res.getMessage());
                 }
-            
         }
     }//GEN-LAST:event_buttonLoginMouseClicked
 

@@ -4,7 +4,13 @@
  * and open the template in the editor.
  */
 package page;
+import helpers.Img;
 import java.awt.Color;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import model.User;
 /**
@@ -25,7 +31,19 @@ public class formLobby extends javax.swing.JFrame {
     }
 
     public formLobby(User user) {
+        initComponents();
+        jPanel2.setBackground(new Color(0,0,0,0));
+        jPanel1.setBackground(new Color(0,0,0,0));
         this.user = user;
+        this.imgProfile.setText("");
+        try {
+            this.imgProfile.setIcon(new ImageIcon(Img.resize(Img.circle(new URL(this.user.getTemp())), 150, 150)));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.nameDisplay.setText(this.user.getName().substring(0,1).toUpperCase()+""+this.user.getName().substring(1).toLowerCase());
     }
     
     
@@ -39,6 +57,8 @@ public class formLobby extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        nameDisplay = new javax.swing.JLabel();
+        imgProfile = new javax.swing.JLabel();
         TAB = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -52,6 +72,18 @@ public class formLobby extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(null);
 
+        nameDisplay.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        nameDisplay.setForeground(new java.awt.Color(255, 255, 255));
+        nameDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameDisplay.setText("Name");
+        getContentPane().add(nameDisplay);
+        nameDisplay.setBounds(385, 180, 280, 30);
+
+        imgProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgProfile.setText("ImgProfile");
+        getContentPane().add(imgProfile);
+        imgProfile.setBounds(450, 20, 150, 150);
+
         TAB.setFont(new java.awt.Font("PSL Omyim", 0, 24)); // NOI18N
         TAB.addTab("HISTORY", jPanel1);
 
@@ -63,7 +95,7 @@ public class formLobby extends javax.swing.JFrame {
         getContentPane().add(TAB);
         TAB.setBounds(800, 60, 200, 500);
 
-        BT_Scan.setIcon(new javax.swing.ImageIcon("C:\\Users\\MYSNACK\\Desktop\\netbeanOX-master\\src\\imgs\\Icon_Scan_1.png")); // NOI18N
+        BT_Scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Icon_Scan_1.png"))); // NOI18N
         BT_Scan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BT_ScanMouseEntered(evt);
@@ -73,9 +105,9 @@ public class formLobby extends javax.swing.JFrame {
             }
         });
         getContentPane().add(BT_Scan);
-        BT_Scan.setBounds(220, 160, 20, 40);
+        BT_Scan.setBounds(220, 160, 30, 40);
 
-        BT_Quick_Play.setIcon(new javax.swing.ImageIcon("C:\\Users\\MYSNACK\\Desktop\\netbeanOX-master\\src\\imgs\\bt_QuickPlay_1.png")); // NOI18N
+        BT_Quick_Play.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/bt_QuickPlay_1.png"))); // NOI18N
         BT_Quick_Play.setLabelFor(BT_Quick_Play);
         BT_Quick_Play.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -88,7 +120,7 @@ public class formLobby extends javax.swing.JFrame {
         getContentPane().add(BT_Quick_Play);
         BT_Quick_Play.setBounds(380, 630, 320, 80);
 
-        BG_Lobby.setIcon(new javax.swing.ImageIcon("C:\\Users\\MYSNACK\\Desktop\\netbeanOX-master\\src\\imgs\\BG_Home.png")); // NOI18N
+        BG_Lobby.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/BG_Home.png"))); // NOI18N
         getContentPane().add(BG_Lobby);
         BG_Lobby.setBounds(0, -10, 1030, 790);
 
@@ -157,8 +189,10 @@ public class formLobby extends javax.swing.JFrame {
     private javax.swing.JLabel BT_Quick_Play;
     private javax.swing.JLabel BT_Scan;
     private javax.swing.JTabbedPane TAB;
+    private javax.swing.JLabel imgProfile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel nameDisplay;
     // End of variables declaration//GEN-END:variables
 }

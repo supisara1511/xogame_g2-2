@@ -14,10 +14,14 @@ public class Response {
     private String message;
     private User data;
 
-    public Response(String text) {
-        message = "Error"+text;
+//    public Response(String text) {
+//        message = "Error"+text;
+//    }
+//    
+
+    public void setMessage(String message) {
+        this.message = message;
     }
-    
     
 
     public int getStatus() {

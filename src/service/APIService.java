@@ -5,8 +5,10 @@
  */
 package service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
@@ -18,6 +20,25 @@ import model.Response;
  */
 public class APIService {
     final static String url_base = "http://www.9develop.com:12123";
+    static {
+        Unirest.setTimeouts(1000, 5000);
+
+        Unirest.setObjectMapper(new ObjectMapper() {
+            private Gson gson = new GsonBuilder().disableHtmlEscaping()
+                    .create();
+
+            @Override
+            public <T> T readValue(String value, Class<T> valueType) {
+                return gson.fromJson(value, valueType);
+            }
+
+            @Override
+            public String writeValue(Object value) {
+                return gson.toJson(value);
+            }
+        });
+    }
+
     public static Response login(String username,String password){
     String url = url_base+"/api/user/login";
         try {
@@ -26,9 +47,13 @@ public class APIService {
                     .field("username", username)
                     .field("password", password)
                     .asObject(Response.class);
-            return jsonResponse.getBody();
+            Response res = jsonResponse.getBody();
+            return res;
         } catch (UnirestException ex) {
-            return new Response(ex.getMessage());
+            System.out.println(ex.getMessage());
+            Response res = new Response();
+            res.setMessage(ex.getMessage());
+            return res;
         }
 				
     }

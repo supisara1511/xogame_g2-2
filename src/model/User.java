@@ -14,6 +14,7 @@ import page.RegisterPage;
  * @author FRAME
  */
 public class User {
+    private String _id;
     private String username;
     private String name;
     private String temp;
