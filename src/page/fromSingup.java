@@ -2,14 +2,23 @@ package page;
 
 import com.placeholder.PlaceHolder;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import model.User;
 import org.json.JSONObject;
+import service.APIService;
 
 public class fromSingup extends javax.swing.JFrame {
 
-  
+  private String fileImg;
     public fromSingup() {
         initComponents();
         
@@ -54,7 +63,6 @@ public class fromSingup extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        LabelPicture = new javax.swing.JLabel();
         buttonExit = new javax.swing.JLabel();
         button_edit = new javax.swing.JLabel();
         buttonLogin = new javax.swing.JLabel();
@@ -65,18 +73,15 @@ public class fromSingup extends javax.swing.JFrame {
         textboxPassword = new javax.swing.JPasswordField();
         buttonSignup = new javax.swing.JLabel();
         BG = new javax.swing.JLabel();
+        imgUp = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(null);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\MYSNACK\\Desktop\\netbeanOX-master\\src\\imgs\\bt_edit_profile_1.png")); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(250, 520, 240, 50);
-        getContentPane().add(LabelPicture);
-        LabelPicture.setBounds(150, 150, 360, 370);
 
         buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/bt-close.png"))); // NOI18N
         buttonExit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -149,6 +154,16 @@ public class fromSingup extends javax.swing.JFrame {
         getContentPane().add(BG);
         BG.setBounds(0, -1, 1030, 770);
 
+        imgUp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/q.png"))); // NOI18N
+        imgUp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgUpMouseClicked(evt);
+            }
+        });
+        getContentPane().add(imgUp);
+        imgUp.setBounds(145, 155, 370, 370);
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -166,9 +181,12 @@ public class fromSingup extends javax.swing.JFrame {
         
         if(name.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()){
             JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบ");
-        }else if( matchPassword(password,confirmPassword) && checkStongPassword(password)){
+        }else if(fileImg.isEmpty())
+            {
+               JOptionPane.showMessageDialog(null, "กรุณาเลือกรูปประจำตัว");
+            }else if( matchPassword(password,confirmPassword) && checkStongPassword(password)){
 //            User user = new User(name, username, password);
-            JOptionPane.showMessageDialog(null, "Success");
+            JOptionPane.showMessageDialog(null, APIService.register(username, password, name,new File(fileImg)));
             reset();
         }
             
@@ -201,6 +219,28 @@ public class fromSingup extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonLoginMouseClicked
+
+    private void imgUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgUpMouseClicked
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		jfc.setDialogTitle("Select an image");
+		jfc.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and JPG images", "png", "jpg");
+		jfc.addChoosableFileFilter(filter);
+
+		int returnValue = jfc.showOpenDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        fileImg = jfc.getSelectedFile().getPath();
+			System.out.println(fileImg);
+                        BufferedImage img = null;
+                        try {
+                            img = ImageIO.read(new File(fileImg));
+                        } catch (IOException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                           Image dimg = img.getScaledInstance(370, 370, Image.SCALE_SMOOTH);
+                        imgUp.setIcon(new ImageIcon(dimg));
+		}
+    }//GEN-LAST:event_imgUpMouseClicked
 
     public static void main(String args[]) {
        
@@ -242,11 +282,11 @@ public class fromSingup extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BG;
-    private javax.swing.JLabel LabelPicture;
     private javax.swing.JLabel buttonExit;
     private javax.swing.JLabel buttonLogin;
     private javax.swing.JLabel buttonSignup;
     private javax.swing.JLabel button_edit;
+    private javax.swing.JLabel imgUp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPasswordField textboxConfirmPassword;

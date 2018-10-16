@@ -3,14 +3,23 @@ package page;
 import service.APIService;
 import model.User;
 import helpers.Input;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 public class RegisterPage extends javax.swing.JFrame {
 
     private User user;
+    private String fileImg;
     public RegisterPage() {
         
         initComponents();
@@ -18,6 +27,7 @@ public class RegisterPage extends javax.swing.JFrame {
         textboxUsername.setText("Username");
         textboxPassword.setText("Password");
         textboxConfirmPassword.setText("Password");
+        
         
     }
 
@@ -35,12 +45,19 @@ public class RegisterPage extends javax.swing.JFrame {
         buttonSignup = new javax.swing.JLabel();
         Exit = new javax.swing.JLabel();
         BG = new javax.swing.JLabel();
+        imgUp = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(null);
+
+        button_edit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                button_editMouseClicked(evt);
+            }
+        });
         getContentPane().add(button_edit);
         button_edit.setBounds(257, 530, 23, 23);
 
@@ -145,6 +162,16 @@ public class RegisterPage extends javax.swing.JFrame {
         getContentPane().add(BG);
         BG.setBounds(0, -1, 1030, 770);
 
+        imgUp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/q.png"))); // NOI18N
+        imgUp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgUpMouseClicked(evt);
+            }
+        });
+        getContentPane().add(imgUp);
+        imgUp.setBounds(145, 155, 370, 370);
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -210,11 +237,14 @@ public class RegisterPage extends javax.swing.JFrame {
             if(!Input.checkSpace(user,name,pass,passCon))
             {
                return "Please enter your information";
+            }else if(fileImg==null)
+            {
+               return "Please Select Image";
             }
             else
             {
             if(matchConfirmpass(pass,passCon)){
-                    return APIService.register(user, pass, name);
+                    return APIService.register(user, pass, name,new File(fileImg));
                 
             }else
                 return "A password mismatch (pls, try again)";
@@ -270,6 +300,50 @@ public class RegisterPage extends javax.swing.JFrame {
     private void textboxUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textboxUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textboxUsernameActionPerformed
+
+    private void button_editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_editMouseClicked
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		jfc.setDialogTitle("Select an image");
+		jfc.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and JPG images", "png", "jpg");
+		jfc.addChoosableFileFilter(filter);
+
+		int returnValue = jfc.showOpenDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        fileImg = jfc.getSelectedFile().getPath();
+			System.out.println(fileImg);
+                        BufferedImage img = null;
+                        try {
+                            img = ImageIO.read(new File(fileImg));
+                        } catch (IOException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                           Image dimg = img.getScaledInstance(370, 370, Image.SCALE_SMOOTH);
+                        imgUp.setIcon(new ImageIcon(dimg));
+		}
+    }//GEN-LAST:event_button_editMouseClicked
+
+    private void imgUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgUpMouseClicked
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		jfc.setDialogTitle("Select an image");
+		jfc.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and JPG images", "png", "jpg");
+		jfc.addChoosableFileFilter(filter);
+
+		int returnValue = jfc.showOpenDialog(null);
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        fileImg = jfc.getSelectedFile().getPath();
+			System.out.println(fileImg);
+                        BufferedImage img = null;
+                        try {
+                            img = ImageIO.read(new File(fileImg));
+                        } catch (IOException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                           Image dimg = img.getScaledInstance(370, 370, Image.SCALE_SMOOTH);
+                        imgUp.setIcon(new ImageIcon(dimg));
+		}
+    }//GEN-LAST:event_imgUpMouseClicked
 
     public static void main(String args[]) {
        
@@ -330,6 +404,7 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JLabel buttonLogin;
     private javax.swing.JLabel buttonSignup;
     private javax.swing.JLabel button_edit;
+    private javax.swing.JLabel imgUp;
     private javax.swing.JPasswordField textboxConfirmPassword;
     private javax.swing.JTextField textboxName;
     private javax.swing.JPasswordField textboxPassword;
