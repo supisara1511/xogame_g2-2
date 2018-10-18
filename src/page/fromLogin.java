@@ -145,7 +145,7 @@ public class fromLogin extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(730, 590, 41, 16);
+        jLabel1.setBounds(730, 590, 34, 14);
 
         pack();
         setLocationRelativeTo(null);
@@ -241,6 +241,7 @@ public class fromLogin extends javax.swing.JFrame {
                         new formLobby(res.getData(), ld).setVisible(true);
                         lg.dispose();
                     } else {
+                        ld.dispose();
                         JOptionPane.showMessageDialog(null, res.getMessage());
                     }
                 }

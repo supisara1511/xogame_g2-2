@@ -1,7 +1,10 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Map;
 
 
 /*
@@ -13,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author FRAME
  */
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
 public class User {
 
     private String _id;
@@ -21,6 +24,16 @@ public class User {
     private String name;
     private String temp;
     private String password;
+    private String score;
+    
+    
+   @JsonCreator public User(Map<String,Object> delegate) {
+      _id = (String) delegate.get("_id");
+      username = (String) delegate.get("username");
+      name = (String) delegate.get("name");
+      temp = (String) delegate.get("temp");
+      score = (String) (""+delegate.get("score"));
+   }
 
     public User(String username, String name, String temp, String password) {
         this.username = username;
@@ -69,5 +82,14 @@ public class User {
     public void setId(String _id) {
         this._id = _id;
     }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+    
 
 }

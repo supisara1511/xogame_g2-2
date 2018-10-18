@@ -76,4 +76,19 @@ public class APIService {
             return ex.getMessage();
         }
     }
+    
+    public static String registerNoneImg(User user) {
+        String url = url_base + "/api/user/register";
+        try {
+            HttpResponse<Response> jsonResponse = Unirest.post(url)
+                    .header("accept", "application/json")
+                    .field("username", user.getUsername())
+                    .field("password", user.getPassword())
+                    .field("name", user.getName())
+                    .asObject(Response.class);
+            return jsonResponse.getBody().getMessage();
+        } catch (UnirestException ex) {
+            return ex.getMessage();
+        }
+    }
 }

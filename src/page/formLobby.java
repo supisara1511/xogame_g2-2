@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import layout.HistoryItem;
+import layout.RankItem;
 import layout.UserListItem;
 import model.User;
 import service.SocketService;
@@ -33,18 +35,21 @@ public class formLobby extends javax.swing.JFrame {
 
     private User user;
     private SocketService server;
+    private int history = 1;
+    private int rank = 2;
+    private boolean reUser=false;
 
     public formLobby() {
         initComponents();
-        jPanel2.setBackground(new Color(0, 0, 0, 0));
-        jPanel1.setBackground(new Color(0, 0, 0, 0));
+//        jPanel2.setBackground(new Color(0, 0, 0, 0));
+        listshow.setBackground(new Color(0, 0, 0, 0));
 
     }
 
     public formLobby(User userl, page.Loading load) {
         initComponents();
-        jPanel2.setBackground(new Color(0, 0, 0, 0));
-        jPanel1.setBackground(new Color(0, 0, 0, 0));
+//        jPanel2.setBackground(new Color(0, 0, 0, 0));
+//       listshow1.setBackground(new Color(0, 0, 0, 0));
         this.user = userl;
         this.imgProfile.setText("");
         try {
@@ -59,6 +64,8 @@ public class formLobby extends javax.swing.JFrame {
         server.getSocket().on("reloadUserOnline", new Emitter.Listener() {
             @Override
             public void call(Object... os) {
+                if(keySh.getText().isEmpty() && !reUser){
+                    reUser=true;
                 userOlineList.removeAll();
                 userOlineList.revalidate();
                 userOlineList.repaint();
@@ -80,9 +87,91 @@ public class formLobby extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
+                reUser=false;
+                }
+
+            }
+        }).on("reloadHistory", new Emitter.Listener() {
+            @Override
+            public void call(Object... os) {
+                
+                listshow.removeAll();
+                listshow.revalidate();
+                listshow.repaint();
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    model.History[] hisArr = mapper.readValue(os[0].toString(), model.History[].class);
+                    int y = 0;
+                    for (model.History his : hisArr) {
+                        listshow.add(new HistoryItem(his, 0, y));
+                        y += 50;
+                        listshow.revalidate();
+                        listshow.repaint();
+
+                    }
+
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            }
+        }).on("reloadRank", new Emitter.Listener() {
+            @Override
+            public void call(Object... os) {
+                System.out.println(os[0]);
+                listshow.removeAll();
+                listshow.revalidate();
+                listshow.repaint();
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    model.User[] userRank = mapper.readValue(os[0].toString(), model.User[].class);
+                    int y = 0;
+                    int i = 1;
+                    for (model.User his : userRank) {
+                        listshow.add(new RankItem(his, 0, y,i));
+                        y += 50;
+                        listshow.revalidate();
+                        listshow.repaint();
+                        i++;
+
+                    }
+
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+
+            }
+        }).on("reloadUserlist", new Emitter.Listener() {
+            @Override
+            public void call(Object... os) {
+                if(!reUser){
+                    reUser=true;
+                userOlineList.removeAll();
+                userOlineList.revalidate();
+                userOlineList.repaint();
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    User[] userArr = mapper.readValue(os[0].toString(), User[].class);
+                    int y = 0;
+                    for (User userItem : userArr) {
+                        if (!userItem.getId().equals(user.getId())) {
+                            userOlineList.add(new UserListItem(userItem, 0, y));
+                            y += 50;
+                            userOlineList.revalidate();
+                            userOlineList.repaint();
+                        }
+
+                    }
+
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+                }
+                reUser=false;
 
             }
         });
+        load.dispose();
 
     }
 
@@ -97,12 +186,12 @@ public class formLobby extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         userOlineList = new javax.swing.JPanel();
+        listshow = new javax.swing.JPanel();
+        keySh = new javax.swing.JTextField();
+        bt_rank = new javax.swing.JLabel();
+        bt_history = new javax.swing.JLabel();
         nameDisplay = new javax.swing.JLabel();
         imgProfile = new javax.swing.JLabel();
-        TAB = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         button_close = new javax.swing.JLabel();
         BT_Scan = new javax.swing.JLabel();
         BT_Quick_Play = new javax.swing.JLabel();
@@ -118,6 +207,48 @@ public class formLobby extends javax.swing.JFrame {
         getContentPane().add(userOlineList);
         userOlineList.setBounds(36, 210, 210, 310);
 
+        listshow.setOpaque(false);
+        listshow.setLayout(null);
+        getContentPane().add(listshow);
+        listshow.setBounds(773, 120, 251, 460);
+
+        keySh.setBorder(null);
+        keySh.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                keyShCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                keyShInputMethodTextChanged(evt);
+            }
+        });
+        keySh.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                keyShKeyPressed(evt);
+            }
+        });
+        getContentPane().add(keySh);
+        keySh.setBounds(39, 170, 170, 23);
+
+        bt_rank.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bt_rank.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/rank_2.png"))); // NOI18N
+        bt_rank.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_rankMouseClicked(evt);
+            }
+        });
+        getContentPane().add(bt_rank);
+        bt_rank.setBounds(898, 80, 125, 40);
+
+        bt_history.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bt_history.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/history_1.png"))); // NOI18N
+        bt_history.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_historyMouseClicked(evt);
+            }
+        });
+        getContentPane().add(bt_history);
+        bt_history.setBounds(772, 80, 125, 40);
+
         nameDisplay.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         nameDisplay.setForeground(new java.awt.Color(255, 255, 255));
         nameDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -130,17 +261,6 @@ public class formLobby extends javax.swing.JFrame {
         getContentPane().add(imgProfile);
         imgProfile.setBounds(450, 20, 150, 150);
 
-        TAB.setFont(new java.awt.Font("PSL Omyim", 0, 24)); // NOI18N
-        TAB.addTab("HISTORY", jPanel1);
-
-        jLabel1.setText("sdfsdfsdffffffffffffffffffffffffffffffff");
-        jPanel2.add(jLabel1);
-
-        TAB.addTab("RANKING", jPanel2);
-
-        getContentPane().add(TAB);
-        TAB.setBounds(800, 60, 200, 500);
-
         button_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/bt-close.png"))); // NOI18N
         button_close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -152,6 +272,9 @@ public class formLobby extends javax.swing.JFrame {
 
         BT_Scan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Icon_Scan_1.png"))); // NOI18N
         BT_Scan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BT_ScanMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BT_ScanMouseEntered(evt);
             }
@@ -229,6 +352,51 @@ public class formLobby extends javax.swing.JFrame {
         yMouse = evt.getY();
     }//GEN-LAST:event_BG_LobbyMousePressed
 
+    private void bt_historyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_historyMouseClicked
+        if(history!=1){
+            server.getSocket().emit("getHistory");
+            switchBT();
+        }
+    }//GEN-LAST:event_bt_historyMouseClicked
+
+    private void bt_rankMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_rankMouseClicked
+        if(rank==2){
+            server.getSocket().emit("getRank");
+            switchBT();
+        }
+    }//GEN-LAST:event_bt_rankMouseClicked
+
+    private void keyShInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_keyShInputMethodTextChanged
+
+    }//GEN-LAST:event_keyShInputMethodTextChanged
+
+    private void keyShCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_keyShCaretPositionChanged
+     
+    }//GEN-LAST:event_keyShCaretPositionChanged
+
+    private void keyShKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyShKeyPressed
+        if(keySh.getText().isEmpty() && !reUser){
+            server.getSocket().emit("getUserOnline");
+        }
+    }//GEN-LAST:event_keyShKeyPressed
+
+    private void BT_ScanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_ScanMouseClicked
+        if(!keySh.getText().isEmpty() && !reUser){
+            server.getSocket().emit("searchUser",keySh.getText());
+        }
+    }//GEN-LAST:event_BT_ScanMouseClicked
+    private void switchBT(){
+        
+        history = switchVal(history);
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/history_"+history+".png"));
+        bt_history.setIcon(img);
+        rank = switchVal(rank);
+        ImageIcon img2 = new ImageIcon(this.getClass().getResource("../imgs/rank_"+rank+".png"));
+        bt_rank.setIcon(img2);
+    }
+    private int switchVal(int val){
+        return (val==1)?2:1;
+    }
     /**
      * @param args the command line arguments
      */
@@ -269,13 +437,13 @@ public class formLobby extends javax.swing.JFrame {
     private javax.swing.JLabel BG_Lobby;
     private javax.swing.JLabel BT_Quick_Play;
     private javax.swing.JLabel BT_Scan;
-    private javax.swing.JTabbedPane TAB;
+    private javax.swing.JLabel bt_history;
+    private javax.swing.JLabel bt_rank;
     private javax.swing.JLabel button_close;
     private javax.swing.JLabel imgProfile;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField keySh;
+    private javax.swing.JPanel listshow;
     private javax.swing.JLabel nameDisplay;
     private javax.swing.JPanel userOlineList;
     // End of variables declaration//GEN-END:variables
