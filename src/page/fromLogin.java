@@ -21,6 +21,9 @@ public class fromLogin extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
+    
+    private int xMouse,yMouse;
+    
     public fromLogin() {
         initComponents();
         PlaceHolder holderUsername = new PlaceHolder(textboxUsername, "Username");
@@ -122,12 +125,22 @@ public class fromLogin extends javax.swing.JFrame {
 
         BG_Login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/BG_Login2.jpg"))); // NOI18N
         BG_Login.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        BG_Login.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                BG_LoginMouseDragged(evt);
+            }
+        });
+        BG_Login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BG_LoginMousePressed(evt);
+            }
+        });
         getContentPane().add(BG_Login);
         BG_Login.setBounds(0, 0, 1024, 768);
 
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(730, 590, 34, 14);
+        jLabel1.setBounds(730, 590, 41, 16);
 
         pack();
         setLocationRelativeTo(null);
@@ -209,6 +222,19 @@ public class fromLogin extends javax.swing.JFrame {
     private void textboxUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textboxUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textboxUsernameActionPerformed
+
+    private void BG_LoginMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BG_LoginMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_BG_LoginMouseDragged
+
+    private void BG_LoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BG_LoginMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+        
+    }//GEN-LAST:event_BG_LoginMousePressed
 
     /**
      * @param args the command line arguments
