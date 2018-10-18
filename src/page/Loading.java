@@ -35,7 +35,7 @@ public class Loading extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\FRAME\\Desktop\\xogame_g2-2\\src\\imgs\\loading.gif")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/loading.gif"))); // NOI18N
         jLabel1.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
