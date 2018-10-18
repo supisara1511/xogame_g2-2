@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package page;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import helpers.Img;
+import io.socket.client.Ack;
+import io.socket.emitter.Emitter;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,6 +15,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import layout.UserListItem;
 import model.User;
 import service.SocketService;
 /**
@@ -32,11 +36,11 @@ public class formLobby extends javax.swing.JFrame {
         
     }
 
-    public formLobby(User user) {
+    public formLobby(User userl) {
         initComponents();
         jPanel2.setBackground(new Color(0,0,0,0));
         jPanel1.setBackground(new Color(0,0,0,0));
-        this.user = user;
+        this.user = userl;
         this.imgProfile.setText("");
         try {
             this.imgProfile.setIcon(new ImageIcon(Img.resize(Img.circle(new URL(this.user.getTemp())), 150, 150)));
@@ -47,6 +51,33 @@ public class formLobby extends javax.swing.JFrame {
         }
         this.nameDisplay.setText(this.user.getName().substring(0,1).toUpperCase()+""+this.user.getName().substring(1).toLowerCase());
         server = new SocketService(user.getId());
+        server.getSocket().on("reloadUserOnline", new Emitter.Listener() {
+            @Override
+            public void call(Object... os) {
+                userOlineList.removeAll();
+                userOlineList.revalidate();
+                userOlineList.repaint();
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    User[] userArr = mapper.readValue(os[0].toString(), User[].class);
+                    int y = 0;
+                    for(User userItem : userArr){
+                        System.out.println("User : "+userItem.getUsername());
+                        if(!userItem.getId().equals(user.getId())){
+                            userOlineList.add(new UserListItem(userItem,0,y));
+                            y+=50;
+                            userOlineList.revalidate();
+                            userOlineList.repaint();
+                        }
+                        
+                    }
+                    
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+                
+            }
+        });
     }
     
     
@@ -60,6 +91,7 @@ public class formLobby extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        userOlineList = new javax.swing.JPanel();
         nameDisplay = new javax.swing.JLabel();
         imgProfile = new javax.swing.JLabel();
         TAB = new javax.swing.JTabbedPane();
@@ -74,6 +106,11 @@ public class formLobby extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setUndecorated(true);
         getContentPane().setLayout(null);
+
+        userOlineList.setOpaque(false);
+        userOlineList.setLayout(null);
+        getContentPane().add(userOlineList);
+        userOlineList.setBounds(36, 210, 210, 310);
 
         nameDisplay.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         nameDisplay.setForeground(new java.awt.Color(255, 255, 255));
@@ -197,5 +234,6 @@ public class formLobby extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel nameDisplay;
+    private javax.swing.JPanel userOlineList;
     // End of variables declaration//GEN-END:variables
 }

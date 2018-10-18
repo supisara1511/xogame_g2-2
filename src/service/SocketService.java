@@ -36,6 +36,10 @@ public class SocketService {
             System.out.println(ex.getMessage());
         }
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
     
     
 }

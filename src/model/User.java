@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import page.RegisterPage;
 
 
@@ -13,15 +15,13 @@ import page.RegisterPage;
  *
  * @author FRAME
  */
+@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
 public class User {
     private String _id;
     private String username;
     private String name;
     private String temp;
 
-    public User(String name, String username, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public String getUsername() {
         return username;
@@ -50,6 +50,12 @@ public class User {
     public String getId() {
         return _id;
     }
+
+    public void setId(String _id) {
+        this._id = _id;
+    }
+    
+    
     
     
 }
