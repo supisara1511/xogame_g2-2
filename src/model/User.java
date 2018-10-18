@@ -27,13 +27,11 @@ public class User {
         this.name = name;
         this.temp = temp;
         this.password = password;
-        this.passwordCon = passwordCon;
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.passwordCon = passwordCon;
     }
 
     public String getPassword() {
