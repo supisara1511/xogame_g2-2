@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import model.User;
+import service.SocketService;
 /**
  *
  * @author MYSNACK
@@ -23,6 +24,7 @@ public class formLobby extends javax.swing.JFrame {
      * Creates new form fromLobby
      */
     private User user;
+    private SocketService server;
     public formLobby() {
         initComponents();
         jPanel2.setBackground(new Color(0,0,0,0));
@@ -44,6 +46,7 @@ public class formLobby extends javax.swing.JFrame {
             Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.nameDisplay.setText(this.user.getName().substring(0,1).toUpperCase()+""+this.user.getName().substring(1).toLowerCase());
+        server = new SocketService(user.getId());
     }
     
     

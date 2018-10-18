@@ -46,6 +46,10 @@ public class User {
     public void setTemp(String temp) {
         this.temp = temp;
     }
+
+    public String getId() {
+        return _id;
+    }
     
     
 }

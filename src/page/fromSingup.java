@@ -18,7 +18,7 @@ import service.APIService;
 
 public class fromSingup extends javax.swing.JFrame {
 
-  private String fileImg;
+  private String fileImg="";
     public fromSingup() {
         initComponents();
         
@@ -222,24 +222,24 @@ public class fromSingup extends javax.swing.JFrame {
 
     private void imgUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgUpMouseClicked
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-		jfc.setDialogTitle("Select an image");
-		jfc.setAcceptAllFileFilterUsed(false);
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and JPG images", "png", "jpg");
-		jfc.addChoosableFileFilter(filter);
+        jfc.setDialogTitle("Select an image");
+        jfc.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG and JPG images", "png", "jpg");
+        jfc.addChoosableFileFilter(filter);
 
-		int returnValue = jfc.showOpenDialog(null);
-		if (returnValue == JFileChooser.APPROVE_OPTION) {
-                        fileImg = jfc.getSelectedFile().getPath();
-			System.out.println(fileImg);
-                        BufferedImage img = null;
-                        try {
-                            img = ImageIO.read(new File(fileImg));
-                        } catch (IOException ex) {
-                            System.out.println(ex.getMessage());
-                        }
-                           Image dimg = img.getScaledInstance(370, 370, Image.SCALE_SMOOTH);
-                        imgUp.setIcon(new ImageIcon(dimg));
-		}
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            fileImg = jfc.getSelectedFile().getPath();
+            System.out.println(fileImg);
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(new File(fileImg));
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+            Image dimg = img.getScaledInstance(370, 370, Image.SCALE_SMOOTH);
+            imgUp.setIcon(new ImageIcon(dimg));
+        }
     }//GEN-LAST:event_imgUpMouseClicked
 
     public static void main(String args[]) {
