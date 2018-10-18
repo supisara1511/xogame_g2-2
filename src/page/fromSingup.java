@@ -18,47 +18,44 @@ import service.APIService;
 
 public class fromSingup extends javax.swing.JFrame {
 
-  private String fileImg="";
+    private String fileImg = "";
+
     public fromSingup() {
         initComponents();
-        
+
         PlaceHolder holderNmae = new PlaceHolder(textboxName, "Name");
         PlaceHolder holderUsername = new PlaceHolder(textboxUsername, "Username");
         PlaceHolder holderPass = new PlaceHolder(textboxPassword, "********");
         PlaceHolder holderConPass = new PlaceHolder(textboxConfirmPassword, "********");
-       
+
     }
-    
-    public static boolean matchPassword(String password,String confirmPassword) {
-        if(password.equals(confirmPassword)){
+
+    public static boolean matchPassword(String password, String confirmPassword) {
+        if (password.equals(confirmPassword)) {
             return true;
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Confirm Password Not Match");
             return false;
         }
     }
-    
-    
-     public static boolean checkStongPassword(String password) {
-         if(password.length() >= 8){
-              return true;
-         }else{
-             JOptionPane.showMessageDialog(null, "Short password are easy to guess,Try one with at least 8 charactors.");
+
+    public static boolean checkStongPassword(String password) {
+        if (password.length() >= 8) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Short password are easy to guess,Try one with at least 8 charactors.");
             return false;
-         }
+        }
     }
-     
-     public void reset(){
+
+    public void reset() {
         textboxName.setText("");
         textboxUsername.setText("");
         textboxPassword.setText("");
         textboxConfirmPassword.setText("");
     }
-     
-      
 
-    
- 
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -177,41 +174,39 @@ public class fromSingup extends javax.swing.JFrame {
         String username = textboxUsername.getText();
         String password = String.valueOf(textboxPassword.getPassword());
         String confirmPassword = String.valueOf(textboxConfirmPassword.getPassword());
-        
-        
-        if(name.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()){
+
+        if (name.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบ");
-        }else if(fileImg.isEmpty())
-            {
-               JOptionPane.showMessageDialog(null, "กรุณาเลือกรูปประจำตัว");
-            }else if( matchPassword(password,confirmPassword) && checkStongPassword(password)){
-//            User user = new User(name, username, password);
-            JOptionPane.showMessageDialog(null, APIService.register(username, password, name,new File(fileImg)));
+        } else if (fileImg.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "กรุณาเลือกรูปประจำตัว");
+        } else if (matchPassword(password, confirmPassword) && checkStongPassword(password)) {
+            User user = new User(username, name, fileImg, password, confirmPassword);
+            JOptionPane.showMessageDialog(null, APIService.register(user));
             reset();
         }
-            
+
     }//GEN-LAST:event_buttonSignupMouseClicked
 
     private void buttonSignupMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSignupMouseEntered
         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-su2.png"));
-          buttonSignup.setIcon(img);
+        buttonSignup.setIcon(img);
     }//GEN-LAST:event_buttonSignupMouseEntered
 
     private void buttonSignupMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSignupMouseExited
         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-su.png"));
-          buttonSignup.setIcon(img);
+        buttonSignup.setIcon(img);
     }//GEN-LAST:event_buttonSignupMouseExited
 
     private void buttonLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseEntered
-       ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li.png"));
-          buttonLogin.setIcon(img);
-        
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li.png"));
+        buttonLogin.setIcon(img);
+
     }//GEN-LAST:event_buttonLoginMouseEntered
 
     private void buttonLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseExited
-         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li2.png"));
-          buttonLogin.setIcon(img);
-        
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li2.png"));
+        buttonLogin.setIcon(img);
+
     }//GEN-LAST:event_buttonLoginMouseExited
 
     private void buttonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseClicked
@@ -243,7 +238,7 @@ public class fromSingup extends javax.swing.JFrame {
     }//GEN-LAST:event_imgUpMouseClicked
 
     public static void main(String args[]) {
-       
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -266,16 +261,12 @@ public class fromSingup extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
-              
-         
-         
-         
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
                 new fromSingup().setVisible(true);
-                
+
             }
         });
     }

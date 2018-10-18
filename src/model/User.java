@@ -10,18 +10,37 @@ import page.RegisterPage;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author FRAME
  */
-@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
+
     private String _id;
     private String username;
     private String name;
     private String temp;
+    private String password;
+    private String passwordCon;
 
+    public User(String username, String name, String temp, String password, String passwordCon) {
+        this.username = username;
+        this.name = name;
+        this.temp = temp;
+        this.password = password;
+        this.passwordCon = passwordCon;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.passwordCon = passwordCon;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     public String getUsername() {
         return username;
@@ -54,8 +73,5 @@ public class User {
     public void setId(String _id) {
         this._id = _id;
     }
-    
-    
-    
-    
+
 }

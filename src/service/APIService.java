@@ -13,13 +13,16 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
 import model.Response;
+import model.User;
 
 /**
  *
  * @author TheNineInwKung
  */
 public class APIService {
+
     final static String url_base = "http://www.9develop.com:12123";
+
     static {
         Unirest.setTimeouts(1000, 5000);
 
@@ -39,13 +42,13 @@ public class APIService {
         });
     }
 
-    public static Response login(String username,String password){
-    String url = url_base+"/api/user/login";
+    public static Response login(User user) {
+        String url = url_base + "/api/user/login";
         try {
             HttpResponse<Response> jsonResponse = Unirest.post(url)
                     .header("accept", "application/json")
-                    .field("username", username)
-                    .field("password", password)
+                    .field("username", user.getUsername())
+                    .field("password", user.getPassword())
                     .asObject(Response.class);
             Response res = jsonResponse.getBody();
             return res;
@@ -55,36 +58,22 @@ public class APIService {
             res.setMessage(ex.getMessage());
             return res;
         }
-				
+
     }
-    public static String register(String username,String password,String name){
-    String url = url_base+"/api/user/register";
+
+    public static String register(User user) {
+        String url = url_base + "/api/user/register/img";
         try {
             HttpResponse<Response> jsonResponse = Unirest.post(url)
                     .header("accept", "application/json")
-                    .field("username", username)
-                    .field("password", password)
-                    .field("name", name)
+                    .field("username", user.getUsername())
+                    .field("password", user.getPassword())
+                    .field("name", user.getName())
+                    .field("FileImg", new File(user.getTemp()))
                     .asObject(Response.class);
             return jsonResponse.getBody().getMessage();
         } catch (UnirestException ex) {
             return ex.getMessage();
         }
-				
-    }
-    public static String register(String username,String password,String name,File file){
-    String url = url_base+"/api/user/register/img";
-        try {
-            HttpResponse<Response> jsonResponse = Unirest.post(url)
-                    .header("accept", "application/json")
-                    .field("username", username)
-                    .field("password", password)
-                    .field("name", name)
-                    .field("FileImg", file)
-                    .asObject(Response.class);
-            return jsonResponse.getBody().getMessage();
-        } catch (UnirestException ex) {
-            return ex.getMessage();
-        }			
     }
 }

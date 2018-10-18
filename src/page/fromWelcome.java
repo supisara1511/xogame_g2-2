@@ -47,7 +47,6 @@ public class fromWelcome extends javax.swing.JFrame {
         getContentPane().add(jLabel7);
         jLabel7.setBounds(610, 430, 200, 50);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\MYSNACK\\Desktop\\netbeanOX-master\\src\\imgs\\bt-NNext.png")); // NOI18N
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
@@ -66,8 +65,6 @@ public class fromWelcome extends javax.swing.JFrame {
         jLabel4.setText("Welcome to OX Moonsters");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(610, 250, 200, 50);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\MYSNACK\\Desktop\\netbeanOX-master\\src\\imgs\\messend.png")); // NOI18N
         getContentPane().add(jLabel6);
         jLabel6.setBounds(560, 130, 310, 450);
 
@@ -77,9 +74,6 @@ public class fromWelcome extends javax.swing.JFrame {
         jLabel2.setBounds(280, 420, 280, 240);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ts-back.png"))); // NOI18N
-        jLabel1.setMaximumSize(new java.awt.Dimension(1024, 768));
-        jLabel1.setMinimumSize(new java.awt.Dimension(1024, 768));
-        jLabel1.setPreferredSize(new java.awt.Dimension(1024, 768));
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1024, 768);
 

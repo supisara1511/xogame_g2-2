@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package page;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import helpers.Img;
 import io.socket.client.Ack;
@@ -18,6 +19,7 @@ import javax.swing.ImageIcon;
 import layout.UserListItem;
 import model.User;
 import service.SocketService;
+
 /**
  *
  * @author MYSNACK
@@ -27,22 +29,22 @@ public class formLobby extends javax.swing.JFrame {
     /**
      * Creates new form fromLobby
      */
-    
-    private int xMouse,yMouse;
-    
+    private int xMouse, yMouse;
+
     private User user;
     private SocketService server;
+
     public formLobby() {
         initComponents();
-        jPanel2.setBackground(new Color(0,0,0,0));
-        jPanel1.setBackground(new Color(0,0,0,0));
-        
+        jPanel2.setBackground(new Color(0, 0, 0, 0));
+        jPanel1.setBackground(new Color(0, 0, 0, 0));
+
     }
 
-    public formLobby(User userl) {
+    public formLobby(User userl, page.Loading load) {
         initComponents();
-        jPanel2.setBackground(new Color(0,0,0,0));
-        jPanel1.setBackground(new Color(0,0,0,0));
+        jPanel2.setBackground(new Color(0, 0, 0, 0));
+        jPanel1.setBackground(new Color(0, 0, 0, 0));
         this.user = userl;
         this.imgProfile.setText("");
         try {
@@ -52,7 +54,7 @@ public class formLobby extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.nameDisplay.setText(this.user.getName().substring(0,1).toUpperCase()+""+this.user.getName().substring(1).toLowerCase());
+        this.nameDisplay.setText(this.user.getName().substring(0, 1).toUpperCase() + "" + this.user.getName().substring(1).toLowerCase());
         server = new SocketService(user.getId());
         server.getSocket().on("reloadUserOnline", new Emitter.Listener() {
             @Override
@@ -64,26 +66,25 @@ public class formLobby extends javax.swing.JFrame {
                 try {
                     User[] userArr = mapper.readValue(os[0].toString(), User[].class);
                     int y = 0;
-                    for(User userItem : userArr){
-                        System.out.println("User : "+userItem.getUsername());
-                        if(!userItem.getId().equals(user.getId())){
-                            userOlineList.add(new UserListItem(userItem,0,y));
-                            y+=50;
+                    for (User userItem : userArr) {
+                        System.out.println("User : " + userItem.getUsername());
+                        if (!userItem.getId().equals(user.getId())) {
+                            userOlineList.add(new UserListItem(userItem, 0, y));
+                            y += 50;
                             userOlineList.revalidate();
                             userOlineList.repaint();
                         }
-                        
+
                     }
-                    
+
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
-                
+
             }
         });
+
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -193,23 +194,23 @@ public class formLobby extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BT_Quick_PlayMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_Quick_PlayMouseEntered
-       ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt_QuickPlay_2.png"));
-       BT_Quick_Play.setIcon(img);
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt_QuickPlay_2.png"));
+        BT_Quick_Play.setIcon(img);
     }//GEN-LAST:event_BT_Quick_PlayMouseEntered
 
     private void BT_Quick_PlayMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_Quick_PlayMouseExited
         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt_QuickPlay_1.png"));
-       BT_Quick_Play.setIcon(img);
+        BT_Quick_Play.setIcon(img);
     }//GEN-LAST:event_BT_Quick_PlayMouseExited
 
     private void BT_ScanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_ScanMouseEntered
         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/Icon_Scan_2.png"));
-       BT_Scan.setIcon(img);
+        BT_Scan.setIcon(img);
     }//GEN-LAST:event_BT_ScanMouseEntered
 
     private void BT_ScanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BT_ScanMouseExited
-         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/Icon_Scan_1.png"));
-       BT_Scan.setIcon(img);
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/Icon_Scan_1.png"));
+        BT_Scan.setIcon(img);
     }//GEN-LAST:event_BT_ScanMouseExited
 
     private void button_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_closeMouseClicked
@@ -219,7 +220,7 @@ public class formLobby extends javax.swing.JFrame {
     private void BG_LobbyMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BG_LobbyMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        
+
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_BG_LobbyMouseDragged
 

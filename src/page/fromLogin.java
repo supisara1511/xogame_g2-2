@@ -5,13 +5,14 @@
  */
 package page;
 
-
 import com.placeholder.PlaceHolder;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import model.Response;
+import model.User;
 import service.APIService;
+
 /**
  *
  * @author Demon
@@ -21,14 +22,15 @@ public class fromLogin extends javax.swing.JFrame {
     /**
      * Creates new form LoginPage
      */
-    
-    private int xMouse,yMouse;
-    
+    private int xMouse, yMouse;
+    private Thread th;
+    private page.Loading ld;
+
     public fromLogin() {
         initComponents();
         PlaceHolder holderUsername = new PlaceHolder(textboxUsername, "Username");
         PlaceHolder holderPass = new PlaceHolder(textboxPassword, "********");
-       
+
     }
 
     /**
@@ -65,6 +67,9 @@ public class fromLogin extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 buttonLoginMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                buttonLoginMousePressed(evt);
             }
         });
         getContentPane().add(buttonLogin);
@@ -147,30 +152,29 @@ public class fromLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_signupMouseClicked
-       fromSingup RP = new fromSingup();
-       RP.setVisible(true);
-       this.dispose();
-      
-       
+        fromSingup RP = new fromSingup();
+        RP.setVisible(true);
+        this.dispose();
+
 
     }//GEN-LAST:event_button_signupMouseClicked
 
     private void textboxUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textboxUsernameFocusGained
 
-       
+
     }//GEN-LAST:event_textboxUsernameFocusGained
 
     private void textboxUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textboxUsernameFocusLost
-        
+
 
     }//GEN-LAST:event_textboxUsernameFocusLost
 
     private void textboxPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textboxPasswordFocusGained
-      
+
     }//GEN-LAST:event_textboxPasswordFocusGained
 
     private void textboxPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textboxPasswordFocusLost
-        
+
 
     }//GEN-LAST:event_textboxPasswordFocusLost
 
@@ -179,44 +183,27 @@ public class fromLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_button_closeMouseClicked
 
     private void button_signupMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_signupMouseEntered
-          ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-su2.png"));
-          button_signup.setIcon(img);
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-su2.png"));
+        button_signup.setIcon(img);
     }//GEN-LAST:event_button_signupMouseEntered
 
     private void button_signupMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_signupMouseExited
-         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-su.png"));
-          button_signup.setIcon(img);
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-su.png"));
+        button_signup.setIcon(img);
     }//GEN-LAST:event_button_signupMouseExited
 
     private void buttonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseClicked
-        String username = textboxUsername.getText();
-        String password = String.valueOf(textboxPassword.getPassword());
-       
-        
-        
-        
-        if(username.isEmpty() || password.isEmpty()){
-            JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบ");
-        }else {
-            Response res = APIService.login(username, password);
-            System.out.println(res.getMessage());
-                if(res.getStatus()==0){
-                    new formLobby(res.getData()).setVisible(true);
-                    this.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(null, res.getMessage());
-                }
-        }
+//        sendLogin();
     }//GEN-LAST:event_buttonLoginMouseClicked
 
     private void buttonLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseEntered
-       ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li.png"));
-          buttonLogin.setIcon(img);
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li.png"));
+        buttonLogin.setIcon(img);
     }//GEN-LAST:event_buttonLoginMouseEntered
 
     private void buttonLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseExited
-         ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li2.png"));
-          buttonLogin.setIcon(img);
+        ImageIcon img = new ImageIcon(this.getClass().getResource("../imgs/bt-li2.png"));
+        buttonLogin.setIcon(img);
     }//GEN-LAST:event_buttonLoginMouseExited
 
     private void textboxUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textboxUsernameActionPerformed
@@ -226,15 +213,43 @@ public class fromLogin extends javax.swing.JFrame {
     private void BG_LoginMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BG_LoginMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        
+
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_BG_LoginMouseDragged
 
     private void BG_LoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BG_LoginMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
-        
+
     }//GEN-LAST:event_BG_LoginMousePressed
+
+    private void buttonLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMousePressed
+        ld = new page.Loading();
+        ld.setVisible(true);
+        fromLogin lg = this;
+        th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User user = new User(textboxUsername.getText(), String.valueOf(textboxPassword.getPassword()));
+
+                if (user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบ");
+                } else {
+                    Response res = APIService.login(user);
+                    System.out.println(res.getMessage());
+                    if (res.getStatus() == 0) {
+                        new formLobby(res.getData(), ld).setVisible(true);
+                        lg.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, res.getMessage());
+                    }
+                }
+            }
+        });
+        th.start();
+
+
+    }//GEN-LAST:event_buttonLoginMousePressed
 
     /**
      * @param args the command line arguments
@@ -271,6 +286,7 @@ public class fromLogin extends javax.swing.JFrame {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BG_Login;
