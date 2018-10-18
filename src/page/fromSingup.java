@@ -180,7 +180,7 @@ public class fromSingup extends javax.swing.JFrame {
         } else if (fileImg.isEmpty()) {
             JOptionPane.showMessageDialog(null, "กรุณาเลือกรูปประจำตัว");
         } else if (matchPassword(password, confirmPassword) && checkStongPassword(password)) {
-            User user = new User(username, name, fileImg, password, confirmPassword);
+            User user = new User(username, name, fileImg, password);
             JOptionPane.showMessageDialog(null, APIService.register(user));
             reset();
         }

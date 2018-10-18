@@ -21,9 +21,8 @@ public class User {
     private String name;
     private String temp;
     private String password;
-    private String passwordCon;
 
-    public User(String username, String name, String temp, String password, String passwordCon) {
+    public User(String username, String name, String temp, String password) {
         this.username = username;
         this.name = name;
         this.temp = temp;
