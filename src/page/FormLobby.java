@@ -26,7 +26,7 @@ import service.SocketService;
  *
  * @author MYSNACK
  */
-public class formLobby extends javax.swing.JFrame {
+public class FormLobby extends javax.swing.JFrame {
 
     /**
      * Creates new form fromLobby
@@ -39,14 +39,14 @@ public class formLobby extends javax.swing.JFrame {
     private int rank = 2;
     private boolean reUser=false;
 
-    public formLobby() {
+    public FormLobby() {
         initComponents();
 //        jPanel2.setBackground(new Color(0, 0, 0, 0));
         listshow.setBackground(new Color(0, 0, 0, 0));
 
     }
 
-    public formLobby(User userl, page.Loading load) {
+    public FormLobby(User userl, page.Loading load) {
         initComponents();
 //        jPanel2.setBackground(new Color(0, 0, 0, 0));
 //       listshow1.setBackground(new Color(0, 0, 0, 0));
@@ -55,9 +55,9 @@ public class formLobby extends javax.swing.JFrame {
         try {
             this.imgProfile.setIcon(new ImageIcon(Img.resize(Img.circle(new URL(this.user.getTemp())), 150, 150)));
         } catch (MalformedURLException ex) {
-            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormLobby.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormLobby.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.nameDisplay.setText(this.user.getName().substring(0, 1).toUpperCase() + "" + this.user.getName().substring(1).toLowerCase());
         server = new SocketService(user.getId());
@@ -414,21 +414,23 @@ public class formLobby extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new formLobby().setVisible(true);
+                new FormLobby().setVisible(true);
             }
         });
     }

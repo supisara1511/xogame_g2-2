@@ -16,11 +16,11 @@ import model.User;
 import org.json.JSONObject;
 import service.APIService;
 
-public class fromSingup extends javax.swing.JFrame {
+public class FormSingup extends javax.swing.JFrame {
 
     private String fileImg = "";
 
-    public fromSingup() {
+    public FormSingup() {
         initComponents();
 
         PlaceHolder holderNmae = new PlaceHolder(textboxName, "Name");
@@ -214,7 +214,7 @@ public class fromSingup extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonLoginMouseExited
 
     private void buttonLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMouseClicked
-        fromLogin login = new fromLogin();
+        FormLogin login = new FormLogin();
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonLoginMouseClicked
@@ -255,21 +255,23 @@ public class fromSingup extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fromSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fromSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fromSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fromSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormSingup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                new fromSingup().setVisible(true);
+                new FormSingup().setVisible(true);
 
             }
         });

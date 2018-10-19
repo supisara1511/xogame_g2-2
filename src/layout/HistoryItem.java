@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import model.History;
-import page.formLobby;
+import page.FormLobby;
 
 /**
  *
@@ -32,9 +32,9 @@ public class HistoryItem extends javax.swing.JPanel {
         try {
             this.imgshow.setIcon(new ImageIcon(Img.resize(Img.circle(new URL(history.getUser().getTemp())), 40, 40)));
         } catch (MalformedURLException ex) {
-            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormLobby.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormLobby.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.name.setText(history.getUser().getName().substring(0,1).toUpperCase()+""+history.getUser().getName().substring(1).toLowerCase());
         this.score.setText(history.getStatus()+" "+history.getWin()+" : "+history.getLose());

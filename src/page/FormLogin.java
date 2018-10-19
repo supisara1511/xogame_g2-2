@@ -17,7 +17,7 @@ import service.APIService;
  *
  * @author Demon
  */
-public class fromLogin extends javax.swing.JFrame {
+public class FormLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
@@ -26,7 +26,7 @@ public class fromLogin extends javax.swing.JFrame {
     private Thread th;
     private page.Loading ld;
 
-    public fromLogin() {
+    public FormLogin() {
         initComponents();
         PlaceHolder holderUsername = new PlaceHolder(textboxUsername, "Username");
         PlaceHolder holderPass = new PlaceHolder(textboxPassword, "********");
@@ -51,7 +51,6 @@ public class fromLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1024, 768));
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setUndecorated(true);
         setResizable(false);
@@ -145,14 +144,14 @@ public class fromLogin extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(730, 590, 34, 14);
+        jLabel1.setBounds(730, 590, 41, 16);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_signupMouseClicked
-        fromSingup RP = new fromSingup();
+        FormSingup RP = new FormSingup();
         RP.setVisible(true);
         this.dispose();
 
@@ -226,7 +225,7 @@ public class fromLogin extends javax.swing.JFrame {
     private void buttonLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLoginMousePressed
         ld = new page.Loading();
         ld.setVisible(true);
-        fromLogin lg = this;
+        FormLogin lg = this;
         th = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -238,7 +237,7 @@ public class fromLogin extends javax.swing.JFrame {
                     Response res = APIService.login(user);
                     System.out.println(res.getMessage());
                     if (res.getStatus() == 0) {
-                        new formLobby(res.getData(), ld).setVisible(true);
+                        new FormLobby(res.getData(), ld).setVisible(true);
                         lg.dispose();
                     } else {
                         ld.dispose();
@@ -269,21 +268,23 @@ public class fromLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fromLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fromLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fromLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fromLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fromLogin().setVisible(true);
+                new FormLogin().setVisible(true);
             }
         });
     }

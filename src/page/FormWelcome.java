@@ -9,12 +9,12 @@ package page;
  *
  * @author MYSNACK
  */
-public class fromWelcome extends javax.swing.JFrame {
+public class FormWelcome extends javax.swing.JFrame {
 
     /**
      * Creates new form fromWelcome
      */
-    public fromWelcome() {
+    public FormWelcome() {
         initComponents();
     }
 
@@ -36,7 +36,6 @@ public class fromWelcome extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1024, 768));
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setUndecorated(true);
         getContentPane().setLayout(null);
@@ -82,7 +81,7 @@ public class fromWelcome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-       formLobby fw = new formLobby();
+       FormLobby fw = new FormLobby();
        fw.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
@@ -104,20 +103,21 @@ public class fromWelcome extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fromWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fromWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fromWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fromWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormWelcome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new fromWelcome().setVisible(true);
+                new FormWelcome().setVisible(true);
             }
         });
     }

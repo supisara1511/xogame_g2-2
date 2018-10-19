@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import model.History;
 import model.User;
-import page.formLobby;
+import page.FormLobby;
 
 /**
  *
@@ -34,9 +34,9 @@ public class RankItem extends javax.swing.JPanel {
         try {
             this.imgshow.setIcon(new ImageIcon(Img.resize(Img.circle(new URL(user.getTemp())), 40, 40)));
         } catch (MalformedURLException ex) {
-            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormLobby.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(formLobby.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormLobby.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.name.setText(user.getName().substring(0,1).toUpperCase()+""+user.getName().substring(1).toLowerCase());
         this.score.setText("score : "+user.getScore());
